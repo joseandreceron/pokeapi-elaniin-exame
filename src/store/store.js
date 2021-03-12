@@ -37,11 +37,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Setup authorization header for api requests
 
 const authMiddleware = ({ getState }) => next => action => {
-    const { user } = getState().session;
+    // const { user } = getState().session;
 
-    if (action.type && user.isLoggedIn) {
-        axios.defaults.headers.common.authorization = `Bearer ${user.token}`;
-        axios.defaults.headers.common["Content-Type"] = "application/json";
+    // if (action.type && user.isLoggedIn) {
+    if (action.type) {
+        // axios.defaults.headers.common.authorization = `Bearer ${user.token}`;
+        // axios.defaults.headers.common["Content-Type"] = "application/json";
     } else {
         delete axios.defaults.headers.common.authorization;
     }

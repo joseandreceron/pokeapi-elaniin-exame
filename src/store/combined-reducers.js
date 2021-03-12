@@ -1,7 +1,9 @@
 import { combineReducers } from "redux"
 
-const rootReducer = combineReducers({
+import pokemon from './pokemons/pokemon.reducers';
 
+const rootReducer = combineReducers({
+    pokemon
 });
 
 export default rootReducer;

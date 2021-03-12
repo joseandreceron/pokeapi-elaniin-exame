@@ -11,7 +11,7 @@ import Home from '../../views/Home';
 
 // Options
 
-// import { commonHeaderOptions, settingsScreens } from '../NavigationOptions';
+import { commonHeaderOptions, settingsScreens } from '../NavigationOptions';
 
 // Constants
 
@@ -24,7 +24,7 @@ export default function HomeStack() {
     return (
         <Stack.Navigator
             initialRouteName="Home"
-        // screenOptions={{ ...commonHeaderOptions }}
+            screenOptions={{ ...commonHeaderOptions }}
         >
             <Stack.Screen
                 name="Home"
@@ -33,6 +33,20 @@ export default function HomeStack() {
                     headerShown: false
                 })}
             />
+
+            {/* Settings Screens  */}
+            {settingsScreens.map((route, i) => {
+                return (
+                    <Stack.Screen
+                        key={i}
+                        name={route.name}
+                        component={route.screen}
+                        options={{
+                            ...route.options,
+                        }}
+                    />
+                );
+            })}
 
         </Stack.Navigator>
     );

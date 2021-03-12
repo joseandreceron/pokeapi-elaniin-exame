@@ -1,5 +1,5 @@
 import Pokeapi from '../../api/models/pokeapi.service';
-import * as ActionTypes from './knowledge.types';
+import * as ActionTypes from './pokemon.types';
 
 // Get knowledge list ====================================================================================================
 

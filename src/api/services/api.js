@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { store } from "../../stores/store"
+import { store } from "../../store/store"
 
 // Define the API root url
 
 import { API_URL } from '../../helpers/constants';
-// import { signOut } from '../store/session/session.actions';
 import { Alert, Platform, ToastAndroid } from 'react-native';
 
 // Setup Axios Instance

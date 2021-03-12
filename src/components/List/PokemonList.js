@@ -17,7 +17,7 @@ import { verticalScale } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 
 
-const PokemonList = ({ navigation, name, data }) => {
+const PokemonList = ({ navigation, name, data, selectedPokemons }) => {
     return (
         <FlatList
             data={data}
@@ -29,6 +29,11 @@ const PokemonList = ({ navigation, name, data }) => {
                 <PokemonCards
                     key={i}
                     name={item.name}
+                    action={(e) => navigation.navigate("PokemonDetails", {
+                        url: item.url,
+                        selectedPokemons: selectedPokemons,
+                        pokemonData: item
+                    })}
                 />
             }
         />
@@ -38,7 +43,7 @@ const PokemonList = ({ navigation, name, data }) => {
 const styles = StyleSheet.create({
     flatlistStyles: {
         marginTop: verticalScale(15),
-        paddingBottom: 50
+        paddingBottom: verticalScale(100)
     }
 });
 

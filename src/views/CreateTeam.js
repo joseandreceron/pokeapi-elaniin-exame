@@ -19,15 +19,36 @@ import { getAllPokemons } from '../store/pokemons/pokemon.actions';
 //Constants
 import { verticalScale } from '../helpers/ScailingScreen';
 import { COLORS } from '../helpers/constants';
+import Button from '../components/Buttons/Button';
 
 
 const CreateTeam = ({ navigation }) => {
+    const [pokemonSelected, setSelectedPokemons] = useState([]);
+
     const dispatch = useDispatch();
     const { allPokemons } = useSelector(state => state.pokemon);
 
     useEffect(() => {
         dispatch(getAllPokemons())
     }, [])
+
+
+    const createTeam = () => {
+        if (pokemonSelected.length >= 3) {
+            console.log("gruop created")
+        } else {
+            console.log("Please add more pokemons")
+        }
+    }
+
+    const selectedPokemons = (e) => {
+        const pokemons = pokemonSelected
+        let addedPokemons;
+
+        pokemons.push(e);
+        console.log("list of pokemons", pokemons)
+    }
+
 
     return (
         <View style={styles.container}>
@@ -45,12 +66,17 @@ const CreateTeam = ({ navigation }) => {
             ) : (
                 <PokemonList
                     data={allPokemons?.data?.results}
+                    navigation={navigation}
+                    selectedPokemons={(e) => selectedPokemons(e)}
                 />
-            )
-            }
+            )}
 
 
-
+            <Button
+                title={"Create Team"}
+                aditionalStyle={styles.buttonStyles}
+                onPress={() => createTeam()}
+            />
 
         </View>
     );
@@ -65,6 +91,11 @@ const styles = StyleSheet.create({
     content: {
 
     },
+    buttonStyles: {
+        position: "absolute",
+        bottom: 30,
+        alignSelf: "center"
+    }
 });
 
 export default CreateTeam;

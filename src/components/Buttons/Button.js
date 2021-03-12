@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 //Constants
 import { COLORS } from '../../helpers/constants';
@@ -25,7 +24,11 @@ function Button(props) {
             onPress={props.onPress ? () => props.onPress() : () => console.log("OnPress")}
         >
             {!props.isLoading ? (
-                <Text style={[styles.buttonText, props.aditionalTitle, { color: props.titleColor ? props.titleColor : COLORS.white }]}>{props.title}</Text>
+                <Text
+                    style={[styles.buttonText,
+                    props.aditionalTitle, {
+                        color: props.titleColor ? props.titleColor : COLORS.white
+                    }]}>{props.title}</Text>
             ) : (
                 <ActivityIndicator
                     size={"large"}

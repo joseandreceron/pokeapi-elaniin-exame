@@ -16,5 +16,15 @@ export default class PokeApiService extends BaseService {
         return axios.get(url)
     }
 
+    // Get pokemon by id ====================================================================================================
+
+    /**
+    * @returns get datail of pokemon
+    *     */
+
+     static getPokemonById(pokemon_id) {
+        const url = `${pokemon_id}`
+        return axios.get(url)
+    }
 
 }

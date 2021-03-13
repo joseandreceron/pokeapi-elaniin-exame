@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   ScrollView,
   View,
   Text,
+  Modal,
 } from 'react-native';
 
 //Components
@@ -19,6 +20,7 @@ import Button from '../components/Buttons/Button';
 
 
 const Home = ({ navigation }) => {
+  const [showRegionModal, setRegionModal] = useState(true)
   return (
     <View style={styles.container}>
 
@@ -56,6 +58,9 @@ const Home = ({ navigation }) => {
 
         </View>
       </ScrollView>
+
+
+
 
 
     </View>

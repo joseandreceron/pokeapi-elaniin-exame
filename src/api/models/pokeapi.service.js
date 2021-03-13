@@ -27,4 +27,5 @@ export default class PokeApiService extends BaseService {
         return axios.get(url)
     }
 
+    
 }

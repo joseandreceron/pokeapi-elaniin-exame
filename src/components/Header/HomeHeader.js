@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, StatusBar, SafeAreaView, Platform } from 'react-native';
 
+//Components
+import TextLabel from "../UI/TextLabel";
 
+//Cnstants
 import { COLORS } from '../../helpers/constants';
 import { scale, moderateScale, verticalScale, heightPercentageToDP } from '../../helpers/ScailingScreen';
 
@@ -18,8 +21,8 @@ class HomeHeader extends Component {
                 <StatusBar barStyle='light-content' />
 
                 <View style={styles.wrapper}>
-                    <Text style={styles.welcomeTitle}>Welcome</Text>
-                    <Text style={styles.userTitle}>{this.props.userName}</Text>
+                    <TextLabel additionalStyles={styles.welcomeTitle}>{this.props.userName}</TextLabel>
+                    <TextLabel additionalStyles={styles.userTitle}>Kanto region</TextLabel>
                 </View>
 
             </SafeAreaView>
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
         marginLeft: Platform.OS === 'ios' ? moderateScale(10) : 0,
     },
     welcomeTitle: {
-        fontSize: moderateScale(35),
+        fontSize: moderateScale(30),
         fontWeight: 'bold',
         color: COLORS.white
     },

@@ -1,5 +1,6 @@
 //API URL
 export const API_URL = 'https://pokeapi.co/api/v2'
+export const FIREBASE_URL = "https://pokeapi-11b86-default-rtdb.firebaseio.com/"
 
 // Colors
 

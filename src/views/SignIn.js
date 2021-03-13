@@ -9,6 +9,7 @@ import Input from '../components/Forms/Input';
 //constants
 import { scale, verticalScale, moderateScale } from '../helpers/ScailingScreen';
 import { COLORS } from '../helpers/constants';
+import TextLabel from '../components/UI/TextLabel';
 
 
 export const SignIn = (({ navigation }) => {
@@ -20,14 +21,14 @@ export const SignIn = (({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle='dark-content' />
 
-      {/* <Image
-        source={require('../assets/Images/Logos/Ceronlogo.png')}
+      <Image
+        source={require('../assets/images/PokeApi-logo.png')}
         style={styles.logo}
-      /> */}
+      />
 
       <View style={styles.wrapper}>
-        <Text style={styles.title}>Welcome to</Text>
-        <Text style={styles.subtitle}>Poke Api</Text>
+        <TextLabel additionalStyles={styles.title}>Welcome to</TextLabel>
+        <TextLabel additionalStyles={styles.subtitle}>Poke Api</TextLabel>
       </View>
 
 
@@ -58,12 +59,18 @@ export const SignIn = (({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <Button
-            backgroundColor={COLORS.lightBlue}
+            backgroundColor={COLORS.darkBlue}
             title={"Login"}
             titleColor={COLORS.white}
             onPress={() => navigation.navigate('Home')}
             isLoading={user?.isLoading}
           />
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUp")}
+          >
+            <Text style={styles.register}>Don't have an account? <Text style={styles.registerTwo}>Register now</Text></Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -81,8 +88,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white
   },
   logo: {
-    width: 380,
-    height: 90,
+    width: 250,
+    height: 100,
     marginTop: verticalScale(80)
   },
   title: {
@@ -135,4 +142,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  register: {
+    fontSize: moderateScale(14),
+    color: COLORS.grey,
+    marginTop: verticalScale(10)
+  },
+  registerTwo: {
+    color: COLORS.darkBlue,
+    fontWeight: "bold"
+  }
 })

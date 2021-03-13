@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import * as ActionTypes from './pokemon.types';
+import * as ActionTypes from './region.types';
 // Setup the initial state
 
 const initialState = {

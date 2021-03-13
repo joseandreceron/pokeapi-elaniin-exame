@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 //Constants
-import { COLORS } from '../../helpers/constants';
+import { COLORS, FONTS } from '../../helpers/constants';
 import { moderateScale, verticalScale } from '../../helpers/ScailingScreen';
 
 
@@ -27,6 +27,7 @@ function Button(props) {
                 <Text
                     style={[styles.buttonText,
                     props.aditionalTitle, {
+                        fontFamily: props.font ? props.font : FONTS.primary,
                         color: props.titleColor ? props.titleColor : COLORS.white
                     }]}>{props.title}</Text>
             ) : (

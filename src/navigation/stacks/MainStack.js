@@ -3,10 +3,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 //Components
-// import DrawerStack from "./DrawerStack"
 
 import HomeStack from "./HomeStack"
 import SignIn from '../../views/SignIn';
+import SignUp from '../../views/SignUp';
+
+import { commonHeaderOptions, settingsScreens } from '../NavigationOptions';
 
 
 const Stack = createStackNavigator();
@@ -27,6 +29,12 @@ export default function MainStack({ navigation }) {
         name="Home"
         component={HomeStack}
         options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ ...commonHeaderOptions }}
       />
 
     </Stack.Navigator>

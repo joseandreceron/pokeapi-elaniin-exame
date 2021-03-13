@@ -3,10 +3,10 @@ import * as ActionTypes from './pokemon.types';
 
 // Get pokemon list ====================================================================================================
 
-export const getAllPokemons = () => async (dispatch, getState) => {
+export const getAllPokemons = (offset, limit) => async (dispatch, getState) => {
     dispatch({ type: ActionTypes.GET_ALL_POKEMONS_REQUEST });
     try {
-        const response = await Pokeapi.getAllPokemon()
+        const response = await Pokeapi.getAllPokemon(offset, limit)
         dispatch({
             type: ActionTypes.GET_ALL_POKEMONS_SUCCESS,
             payload: response

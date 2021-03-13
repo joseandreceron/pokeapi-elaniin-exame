@@ -24,7 +24,7 @@ const PokemonCards = ({ navigation, name, key, selected, action }) => {
             style={styles.container}
             onPress={action ? (e) => action(e) : () => console.log("action")}
         >
-            <TextLabel additionalStyles={styles.title}>{name}</TextLabel>
+            <TextLabel additionalStyles={styles.title}>{name.toUpperCase()}</TextLabel>
 
             {selected &&
                 <FontAwesome5

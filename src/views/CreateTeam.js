@@ -52,7 +52,6 @@ const CreateTeam = ({ navigation }) => {
         }
     }
 
-
     return (
         <View style={styles.container}>
 

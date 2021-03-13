@@ -19,3 +19,11 @@ export const COLORS = {
     darkyellow: "#FFC106",
     aquaBlue: "#3DC9F8"
 };
+
+
+export const FONTS = {
+    primary: 'Nunito-Regular',
+    primaryBold: 'Nunito-SemiBold',
+    secondary: 'Nunito-Bold',
+    secondaryBold: 'Nunito-Bold',
+};

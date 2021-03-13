@@ -19,19 +19,15 @@ import { COLORS } from '../../helpers/constants';
 
 const AbilitiesList = ({ navigation, name, data, action }) => {
     return (
-        <FlatList
-            data={data}
-            keyExtractor={({ item, key }) => key}
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnabled
-            contentContainerStyle={styles.flatlistStyles}
-            renderItem={({ item, i },) =>
-                <View style={styles.container}>
+        <>
+            {data && data.map((item, key) =>
+                <View key={key} style={styles.container}>
                     <View style={styles.dots} />
                     <Text style={styles.ability}>{item.ability.name}</Text>
                 </View>
-            }
-        />
+            )}
+        </>
+
     );
 };
 
@@ -43,12 +39,13 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         width: "100%",
-        marginVertical: 10
+        marginVertical: 10,
+        alignItems: 'center'
     },
     dots: {
         backgroundColor: COLORS.red,
-        height: 20,
-        width: 20,
+        height: 10,
+        width: 10,
         borderRadius: 10,
         marginHorizontal: 10
     },

@@ -3,7 +3,7 @@ import { Text, StyleSheet } from 'react-native';
 
 // Constants
 
-import { COLORS } from '../../helpers/constants';
+import { COLORS, FONTS } from '../../helpers/constants';
 
 // Components
 
@@ -40,7 +40,7 @@ const TextLabel = props => {
 
     const styles = StyleSheet.create({
         textStyles: {
-            //   fontFamily: props.font ? props.font : FONTS.primary,
+              fontFamily: props.font ? props.font : FONTS.primary,
             fontSize: props.size ? props.size : 16,
             color: props.color ? colors[props.color] : colors.default,
             textTransform: props.transform

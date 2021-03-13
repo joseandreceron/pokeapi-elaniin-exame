@@ -1,6 +1,10 @@
 //Modules
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 //Components
 import Button from '../components/Buttons/Button';
@@ -10,74 +14,98 @@ import Input from '../components/Forms/Input';
 import { scale, verticalScale, moderateScale } from '../helpers/ScailingScreen';
 import { COLORS } from '../helpers/constants';
 import TextLabel from '../components/UI/TextLabel';
+import { signIn } from '../store/session/session.actions';
 
 
 export const SignIn = (({ navigation }) => {
+  const dispatch = useDispatch();
+  
   const [password, SetPassword] = useState("")
   const [user, setUser] = useState("")
 
+  const userSignIn = async (values, actions) => {
+    const data = {
+      email: values.username,
+      password: values.password,
+    };
+
+    dispatch(signIn(values))
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle='dark-content' />
+      <KeyboardAwareScrollView>
 
-      <Image
-        source={require('../assets/images/PokeApi-logo.png')}
-        style={styles.logo}
-      />
-
-      <View style={styles.wrapper}>
-        <TextLabel additionalStyles={styles.title}>Welcome to</TextLabel>
-        <TextLabel additionalStyles={styles.subtitle}>Poke Api</TextLabel>
-      </View>
-
-
-      <View style={styles.wrapper}>
-        <Input
-          title={"Email"}
-          onChangeText={() => console.log('username')}
-          value={user}
-          keyboardType="email-address"
-          placeholder={"example@example.com"}
-          placeholderTextColor={COLORS.lightBlack}
+        <Image
+          source={require('../assets/images/PokeApi-logo.png')}
+          style={styles.logo}
         />
 
-        <Input
-          title={"Password"}
-          onChangeText={() => console.log('password')}
-          value={user}
-          secureTextEntry={true}
-          placeholder={"XXXXXXX"}
-          placeholderTextColor={COLORS.lightBlack}
-        />
-
-        {/* <TouchableOpacity
-          style={styles.forgotButton}
-        >
-          <Text style={styles.forgotButtonText}>Olvido su clave?</Text>
-        </TouchableOpacity> */}
-
-        <View style={styles.buttonContainer}>
-          <Button
-            backgroundColor={COLORS.darkBlue}
-            title={"Login"}
-            titleColor={COLORS.white}
-            onPress={() => navigation.navigate('Home')}
-            isLoading={user?.isLoading}
-          />
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignUp")}
-          >
-            <Text style={styles.register}>Don't have an account? <Text style={styles.registerTwo}>Register now</Text></Text>
-          </TouchableOpacity>
+        <View style={styles.wrapper}>
+          <TextLabel additionalStyles={styles.title}>Welcome to</TextLabel>
+          <TextLabel additionalStyles={styles.subtitle}>Poke Api</TextLabel>
         </View>
-      </View>
 
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={(values, actions) => userSignIn(values, actions)}>
+          {props => (
+            <View style={styles.wrapper}>
+              <Input
+                title={"Email"}
+                onChangeText={props.handleChange('username')}
+                value={props.values.user}
+                keyboardType="email-address"
+                placeholder={"example@example.com"}
+                placeholderTextColor={COLORS.lightBlack}
+                error={props.touched.username && props.errors.username}
+              />
+
+              <Input
+                title={"Password"}
+                onChangeText={props.handleChange('password')}
+                value={props.values.password}
+                secureTextEntry={true}
+                placeholder={"XXXXXXX"}
+                placeholderTextColor={COLORS.lightBlack}
+                error={props.touched.password && props.errors.password}
+              />
+
+              <View style={styles.buttonContainer}>
+                <Button
+                  backgroundColor={COLORS.darkBlue}
+                  title={"Login"}
+                  titleColor={COLORS.white}
+                  // onPress={() => navigation.navigate('Home')}
+                  onPress={props.handleSubmit}
+                  isLoading={user?.isLoading}
+                />
+
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("SignUp")}
+                >
+                  <Text style={styles.register}>Don't have an account? <Text style={styles.registerTwo}>Register now</Text></Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </Formik>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }
 )
+
+const initialValues = { username: '', password: '' };
+
+const validationSchema = yup.object().shape({
+  username: yup.string().required('This Field is requiered'),
+  password: yup.string().required('This Field is requiered'),
+});
+
+
 export default SignIn;
 
 const styles = StyleSheet.create({

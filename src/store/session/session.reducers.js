@@ -18,24 +18,11 @@ function session(state = initialState, action) {
                     error: null,
                 },
             };
-
-        case ActionTypes.USER_SIGN_IN_AUTHORIZED:
-            return {
-                ...state,
-                user: {
-                    token: action.payload.data,
-                    isLoading: true,
-                    isLoggedIn: false,
-                    error: null,
-                },
-            }
-
         case ActionTypes.USER_SIGN_IN_SUCCESS:
             return {
                 ...state,
                 user: {
-                    data: action.payload.data.data,
-                    token: action.payload.token.data,
+                    data: action.payload.data,
                     isLoading: false,
                     isLoggedIn: true,
                     error: null,

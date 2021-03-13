@@ -16,8 +16,8 @@ export default class SessionService extends BaseService {
     */
 
     static singIn(data) {
-        const url = `${FIREBASE_URL}/users.json?orderBy="email"&equalTo="${data.email}"`
-        return api.post(url, data)
+        const url = `${FIREBASE_URL}/users.json?orderBy="email"&equalTo="${data.username}"`
+        return api.get(url, data)
     }
 
     static createUser(data) {

@@ -1,6 +1,7 @@
 //Modules
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 
@@ -14,24 +15,27 @@ import { commonHeaderOptions, settingsScreens } from '../NavigationOptions';
 const Stack = createStackNavigator();
 
 export default function MainStack({ navigation }) {
+  const { user } = useSelector(state => state.session);
   return (
     <Stack.Navigator
       initialRouteName={"SignIn"}
     >
 
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      />
+      {!user?.isLoggedIn ? (
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen
+          name="Home"
+          component={HomeStack}
+          options={{ headerShown: false }}
+        />
+      )}
 
-      <Stack.Screen
-        name="Home"
-        component={HomeStack}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
+      < Stack.Screen
         name="SignUp"
         component={SignUp}
         options={{ ...commonHeaderOptions }}

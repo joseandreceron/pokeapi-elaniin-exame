@@ -9,21 +9,21 @@ export const signIn = data => async (dispatch, getState) => {
 
     try {
         const response = await SessionService.singIn(data)
-        console.log(response);
-        dispatch({
-            type: ActionTypes.USER_SIGN_IN_AUTHORIZED,
-            payload: response
-        })
-
-        const profileResponse = await SessionService.getUserInfo()
-        dispatch({
-            type: ActionTypes.USER_SIGN_IN_SUCCESS,
-            payload: {
-                data: profileResponse,
-                token: response
-            }
-        })
-
+        const getValues = Object.keys(response.data);
+        const userselected = response.data[getValues];
+        if (userselected.password === data.password) {
+            dispatch({
+                type: ActionTypes.USER_SIGN_IN_SUCCESS,
+                payload: {
+                    data: userselected,
+                }
+            })
+        } else {
+            dispatch({
+                type: ActionTypes.USER_SIGN_IN_FAILURE,
+                payload: "The given data was invalid, please check your email or password."
+            })
+        }
     } catch (err) {
         console.log(err.response?.data);
         if (err.response?.status === 422) {
@@ -57,7 +57,7 @@ export const register = data => async (dispatch, getState) => {
 
 export const registerCleanUp = () => (dispatch, getState) => {
     dispatch({ type: ActionTypes.REGISTER_USER_CLEANUP });
-  }
+}
 
 
 // Log Out the user ====================================================================================================

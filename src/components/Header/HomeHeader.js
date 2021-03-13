@@ -22,7 +22,7 @@ class HomeHeader extends Component {
 
                 <View style={styles.wrapper}>
                     <TextLabel additionalStyles={styles.welcomeTitle}>{this.props.userName}</TextLabel>
-                    <TextLabel additionalStyles={styles.userTitle}>Kanto region</TextLabel>
+                    <TextLabel additionalStyles={styles.userTitle}>{this.props.region}</TextLabel>
                 </View>
 
             </SafeAreaView>
@@ -34,7 +34,7 @@ export default HomeHeader;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.lightBlue,
+        backgroundColor: COLORS.darkBlue,
         height: heightPercentageToDP('35%'),
         width: '100%',
         padding: scale(10),

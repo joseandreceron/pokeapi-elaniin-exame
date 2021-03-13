@@ -7,6 +7,7 @@ import {
   Text,
   Modal,
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import CustomHeader from '../components/Header/CustomHeader';
@@ -20,7 +21,8 @@ import Button from '../components/Buttons/Button';
 
 
 const Home = ({ navigation }) => {
-  const [showRegionModal, setRegionModal] = useState(true)
+  const { user } = useSelector(state => state.session);
+
   return (
     <View style={styles.container}>
 
@@ -33,14 +35,14 @@ const Home = ({ navigation }) => {
 
         <HomeHeader
           navigation={navigation}
-          userName={'Jose Andre Ceron'}
+          userName={user?.data?.username}
+          region={user?.data?.region}
         />
 
         <View style={styles.content}>
           <Listcard
             title={'My Teams'}
             description='My top 3 teams'
-            icon={'warehouse'}
             viewMoreAction={() => navigation.navigate("AllTeams")}
           />
         </View>
@@ -58,11 +60,6 @@ const Home = ({ navigation }) => {
 
         </View>
       </ScrollView>
-
-
-
-
-
     </View>
   );
 };

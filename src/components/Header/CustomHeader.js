@@ -39,14 +39,14 @@ export default CustomHeader;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.lightBlue,
+        backgroundColor: COLORS.darkBlue,
         height: heightPercentageToDP('35%'),
         width: '100%',
         padding: scale(10),
         justifyContent: 'center',
     },
     iconContainer: {
-        backgroundColor: COLORS.lightBlue,
+        backgroundColor: COLORS.darkBlue,
         zIndex: 1,
         width: '100%',
         height: Platform.OS === 'ios' ? verticalScale(90) : verticalScale(60),

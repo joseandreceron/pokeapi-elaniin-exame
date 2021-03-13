@@ -26,12 +26,8 @@ export default class SessionService extends BaseService {
     }
 
     static createTeam(data) {
-        const url = `${FIREBASE_URL}/teams.json/`
-        return api.post(url, data)
-    }
-
-    static createTeam(data) {
-        const url = `${FIREBASE_URL}/teams.json/1`
+        const url = `${FIREBASE_URL}/users/${data.key}.json`
         return api.patch(url, data)
     }
+
 }

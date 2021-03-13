@@ -12,6 +12,9 @@ export const signIn = data => async (dispatch, getState) => {
         const getValues = Object.keys(response.data);
         const userselected = response.data[getValues];
         if (userselected.password === data.password) {
+
+            const addingKey = userselected.key = getValues[0]
+
             dispatch({
                 type: ActionTypes.USER_SIGN_IN_SUCCESS,
                 payload: {
@@ -80,23 +83,20 @@ export const cleanSessionStore = () => (dispatch, getState) => {
 };
 
 
-// Get user Data ====================================================================================================
+// create pokemon group Data ====================================================================================================
 
-export const getUserData = token => async (dispatch, getState) => {
-    dispatch({ type: ActionTypes.GET_USER_DATA_REQUEST });
-    // try {
-    //     const response = await account.getUserInfo(token)
-    //     dispatch({
-    //         type: ActionTypes.GET_USER_DATA_SUCCESS,
-    //         payload: response
-    //     })
-
-    // } catch (err) {
-    //     console.log(err.response?.data);
-    //     console.log(err)
-    //     dispatch({
-    //         type: ActionTypes.GET_USER_DATA_FAILURE,
-    //         payload: err
-    //     })
-    // }
+export const createPokemonTeam = data => async (dispatch, getState) => {
+    dispatch({ type: ActionTypes.CREATE_POKEMON_TEAM_REQUEST });
+    try {
+        const response = await SessionService.createTeam(data)
+        dispatch({
+            type: ActionTypes.CREATE_POKEMON_TEAM_SUCCESS,
+            payload: response
+        })
+    } catch (err) {
+        dispatch({
+            type: ActionTypes.CREATE_POKEMON_TEAM_FAILURE,
+            payload: err
+        })
+    }
 };

@@ -4,7 +4,8 @@ import * as ActionTypes from './session.types';
 // Setup the initial state
 const initialState = {
     user: {},
-    userRegister: {}
+    userRegister: {},
+    groupCreated: {}
 };
 
 function session(state = initialState, action) {
@@ -96,6 +97,33 @@ function session(state = initialState, action) {
                 ...state,
                 userRegister: {}
             }
+
+        // CREATE POKEMON TEAM
+        case ActionTypes.CREATE_POKEMON_TEAM_REQUEST:
+            return {
+                ...state,
+                groupCreated: {
+                    isLoading: true,
+                    error: null,
+                },
+            };
+        case ActionTypes.CREATE_POKEMON_TEAM_SUCCESS:
+            return {
+                ...state,
+                groupCreated: {
+                    isLoading: false,
+                    isLoggedIn: false,
+                    error: null,
+                },
+            };
+        case ActionTypes.CREATE_POKEMON_TEAM_FAILURE:
+            return {
+                ...state,
+                groupCreated: {
+                    isLoading: false,
+                    error: action.payload,
+                },
+            };
 
         // Clean the session store
         case ActionTypes.CLEAN_SESSION_STORE:

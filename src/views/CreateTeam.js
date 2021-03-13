@@ -5,6 +5,7 @@ import {
     ScrollView,
     View,
     Text,
+    Alert
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -37,16 +38,18 @@ const CreateTeam = ({ navigation }) => {
         if (pokemonSelected.length >= 3) {
             console.log("gruop created")
         } else {
-            console.log("Please add more pokemons")
+            Alert.alert("Error", "Please select 3 or more Pokemon")
         }
     }
 
     const selectedPokemons = (e) => {
         const pokemons = pokemonSelected
-        let addedPokemons;
-
-        pokemons.push(e);
-        console.log("list of pokemons", pokemons)
+        if (pokemons.length < 6) {
+            pokemons.push(e);
+            console.log("list of pokemons", pokemons)
+        } else {
+            Alert.alert("Error", "You can only add up to 6 pokemons")
+        }
     }
 
 

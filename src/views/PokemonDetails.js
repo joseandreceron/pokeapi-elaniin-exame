@@ -34,6 +34,22 @@ const PokemonDetails = ({ navigation, route }) => {
     }, [])
 
     console.log(pokemonDetail.data);
+
+
+    const setPokemon = (e) => {
+        if (pokemonDetail?.data) {
+
+            const pokemonData = {
+                name: e.name,
+                id: e.url,
+                photo: pokemonDetail?.data?.sprites?.front_default,
+                type: pokemonDetail?.data?.types,
+            }
+            route.params.selectedPokemons(pokemonData)
+        }
+    }
+
+
     return (
         <ScrollView style={styles.container}>
             {pokemonDetail?.isLoading ? (
@@ -61,9 +77,10 @@ const PokemonDetails = ({ navigation, route }) => {
                         />
 
                         <Button
-                            title={"Create Team"}
+                            title={"Add to team"}
                             aditionalStyle={styles.buttonStyles}
-                            onPress={() => route.params.selectedPokemons(route.params.pokemonData)}
+                            onPress={() => setPokemon(route.params.pokemonData)}
+                        // onPress={() => route.params.selectedPokemons(route.params.pokemonData)}
                         />
 
                     </View>

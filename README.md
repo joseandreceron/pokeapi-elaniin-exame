@@ -68,4 +68,4 @@ El Proyecto cuenta con las siguientes funcionalidades:
 
 Estructura de la Base de datos hecha en Firebase.
 
-![BD_estructure](/Users/joseandreceron/Documents/Projects/PokeApi/BD_estructure.png)
+![BD_estructure](https://www.dropbox.com/s/eswp24vvx58ejna/BD_estructure.png?dl=0)

@@ -5,7 +5,9 @@ import * as ActionTypes from './session.types';
 const initialState = {
     user: {},
     userRegister: {},
-    groupCreated: {}
+    groupCreated: {},
+    myTeams: {},
+    editTeam: {}
 };
 
 function session(state = initialState, action) {
@@ -112,7 +114,7 @@ function session(state = initialState, action) {
                 ...state,
                 groupCreated: {
                     isLoading: false,
-                    isLoggedIn: false,
+                    data: action.payload.data,
                     error: null,
                 },
             };
@@ -124,7 +126,58 @@ function session(state = initialState, action) {
                     error: action.payload,
                 },
             };
-
+        // GET POKEMON TEAMS
+        case ActionTypes.GET_POKEMON_TEAM_REQUEST:
+            return {
+                ...state,
+                myTeams: {
+                    isLoading: true,
+                    error: null,
+                },
+            };
+        case ActionTypes.GET_POKEMON_TEAM_SUCCESS:
+            return {
+                ...state,
+                myTeams: {
+                    data: action.payload.data,
+                    isLoading: false,
+                    error: null,
+                },
+            };
+        case ActionTypes.GET_POKEMON_TEAM_FAILURE:
+            return {
+                ...state,
+                myTeams: {
+                    isLoading: false,
+                    error: action.payload,
+                },
+            };
+        // EDIT POKEMON TEAMS
+        case ActionTypes.EDIT_POKEMON_TEAM_REQUEST:
+            return {
+                ...state,
+                editTeam: {
+                    isLoading: true,
+                    error: null,
+                },
+            };
+        case ActionTypes.EDIT_POKEMON_TEAM_SUCCESS:
+            return {
+                ...state,
+                editTeam: {
+                    data: action.payload.data,
+                    isLoading: false,
+                    error: null,
+                },
+            };
+        case ActionTypes.EDIT_POKEMON_TEAM_FAILURE:
+            return {
+                ...state,
+                editTeam: {
+                    isLoading: false,
+                    error: action.payload,
+                },
+            };
         // Clean the session store
         case ActionTypes.CLEAN_SESSION_STORE:
             return {

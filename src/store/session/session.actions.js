@@ -12,9 +12,6 @@ export const signIn = data => async (dispatch, getState) => {
         const getValues = Object.keys(response.data);
         const userselected = response.data[getValues];
         if (userselected.password === data.password) {
-
-            const addingKey = userselected.key = getValues[0]
-
             dispatch({
                 type: ActionTypes.USER_SIGN_IN_SUCCESS,
                 payload: {
@@ -85,10 +82,10 @@ export const cleanSessionStore = () => (dispatch, getState) => {
 
 // create pokemon group Data ====================================================================================================
 
-export const createPokemonTeam = data => async (dispatch, getState) => {
+export const createPokemonTeam = (user_id, data) => async (dispatch, getState) => {
     dispatch({ type: ActionTypes.CREATE_POKEMON_TEAM_REQUEST });
     try {
-        const response = await SessionService.createTeam(data)
+        const response = await SessionService.createTeam(user_id, data)
         dispatch({
             type: ActionTypes.CREATE_POKEMON_TEAM_SUCCESS,
             payload: response
@@ -96,6 +93,42 @@ export const createPokemonTeam = data => async (dispatch, getState) => {
     } catch (err) {
         dispatch({
             type: ActionTypes.CREATE_POKEMON_TEAM_FAILURE,
+            payload: err
+        })
+    }
+};
+
+// get pokemon Teams ====================================================================================================
+
+export const getPokemonTeams = data => async (dispatch, getState) => {
+    dispatch({ type: ActionTypes.GET_POKEMON_TEAM_REQUEST });
+    try {
+        const response = await SessionService.getplayerTeams(data)
+        dispatch({
+            type: ActionTypes.GET_POKEMON_TEAM_SUCCESS,
+            payload: response
+        })
+    } catch (err) {
+        dispatch({
+            type: ActionTypes.GET_POKEMON_TEAM_FAILURE,
+            payload: err
+        })
+    }
+};
+
+// Edit pokemon Teams ====================================================================================================
+
+export const editPokemonTeam = (user_id, team_id, data) => async (dispatch, getState) => {
+    dispatch({ type: ActionTypes.EDIT_POKEMON_TEAM_REQUEST });
+    try {
+        const response = await SessionService.editPlayerTeam(user_id, team_id, data)
+        dispatch({
+            type: ActionTypes.EDIT_POKEMON_TEAM_SUCCESS,
+            payload: response
+        })
+    } catch (err) {
+        dispatch({
+            type: ActionTypes.EDIT_POKEMON_TEAM_FAILURE,
             payload: err
         })
     }

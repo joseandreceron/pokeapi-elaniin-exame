@@ -2,42 +2,45 @@
 import React from 'react';
 import {
     StyleSheet,
-    ScrollView,
+    TouchableOpacity,
     View,
     Text,
+    Image
 } from 'react-native';
 
 //Components
+import TextLabel from '../UI/TextLabel';
+import Divider from '../UI/Divider';
 
 //Constants
 import { verticalScale } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
-import TextLabel from '../UI/TextLabel';
-import Divider from '../UI/Divider';
 
-const TeamCards = ({ navigation }) => {
+const TeamCards = ({ navigation, teamNumber, pokemons, teamName, action }) => {
     return (
-        <View style={styles.container}>
-
-            <TextLabel size={22}>Team 01</TextLabel>
-
+        <TouchableOpacity
+            key={teamNumber}
+            style={styles.container}
+            onPress={action ? (e) => action(e) : () => console.log("Team Details")}
+        >
+            <TextLabel size={22}>Team {teamNumber + 1}</TextLabel>
+            <TextLabel size={14}>{teamName}</TextLabel>
             <Divider />
-
             <View style={styles.content}>
-                {pokemonExample.map((item, key) =>
+                {pokemons.map((item, key) =>
                     <View
                         style={styles.pokemonContainer}
                         key={key}
                     >
-                        <View
+                        <Image
+                            source={{ uri: item.photo }}
                             style={styles.image}
                         />
-                        <TextLabel additionalStyles={styles.pokemonNames}>{item.pokeName}</TextLabel>
+                        <TextLabel additionalStyles={styles.pokemonNames}>{item.name}</TextLabel>
                     </View>
                 )}
             </View>
-
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -50,6 +53,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 3, height: 3 },
         shadowOpacity: 0.2,
         elevation: 2,
+        marginVertical: verticalScale(10)
     },
     content: {
         flexDirection: 'row',
@@ -62,7 +66,6 @@ const styles = StyleSheet.create({
     image: {
         height: 60,
         width: 60,
-        backgroundColor: 'red'
     },
     pokemonNames: {
         marginTop: verticalScale(10)

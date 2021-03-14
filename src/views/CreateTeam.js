@@ -33,7 +33,7 @@ const CreateTeam = ({ navigation }) => {
 
     const dispatch = useDispatch();
     const { allPokemons } = useSelector(state => state.pokemon);
-    const { user } = useSelector(state => state.session);
+    const { user, myTeams } = useSelector(state => state.session);
 
     useEffect(() => {
         dispatch(getAllPokemons())
@@ -42,19 +42,16 @@ const CreateTeam = ({ navigation }) => {
 
     const createTeam = () => {
         if (pokemonSelected.length >= 3) {
+            const id = generateId();
 
-            const groupData = [{
+            const groupData = {};
+            groupData[id] = {
                 "team_name": "My Awesome Group",
                 "pokemons": pokemonSelected,
-                "id": generateId()
-            }]
-
-            const userData = {
-                ...user?.data,
-                "myTeam": [...groupData]
+                "id": id
             }
-            dispatch(createPokemonTeam(userData))
-            console.log(userData);
+
+            dispatch(createPokemonTeam(user?.data?.id, groupData))
 
         } else {
             Alert.alert("Error", "Please select 3 or more Pokemon")
@@ -116,6 +113,9 @@ const CreateTeam = ({ navigation }) => {
                     data={allPokemons?.data?.results}
                     navigation={navigation}
                     selectedPokemons={(e) => selectedPokemons(e)}
+                    action={(e) => navigation.navigate("PokemonDetails", {
+                        data: e
+                    })}
                 />
             )}
 

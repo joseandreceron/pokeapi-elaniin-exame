@@ -1,13 +1,27 @@
 //Modules
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 //Constanst
 import { heightPercentageToDP, moderateScale, verticalScale, widthPercentageToDP } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 
 
-const Listcard = ({ navigation, icon, title, description, action, viewMoreAction }) => {
+const Listcard = ({ navigation, data, title, description, action, viewMoreAction }) => {
+    const [teamsArray, setTeamArray] = useState([])
+
+    useEffect(() => {
+        if (data) {
+            let array = [];
+            for (const [key, value] of Object.entries(data)) {
+                console.log(value);                
+                array.push(value)
+            }
+            setTeamArray(array)
+        }
+    }, [])
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -18,16 +32,15 @@ const Listcard = ({ navigation, icon, title, description, action, viewMoreAction
                 </View>
             </View>
 
-            {data.map((item, i) =>
+            {teamsArray?.map((item, i) =>
                 <TouchableOpacity
                     key={i} style={styles.itemContainer}
                     onPress={action ? () => action() : () => console.log("pressed")}
                 >
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.item}>{item.item}</Text>
+                    <Text style={styles.name}>Team {i + 1}</Text>
+                    <Text style={styles.item}>Number of pokemon {item.pokemons.length}</Text>
                     <View style={styles.wrapper}>
-                        <Text style={styles.type}>{item.type}</Text>
-                        <Text style={styles.date}>{item.date}</Text>
+                        <Text style={styles.type}>{item.team_name}</Text>
                     </View>
                 </TouchableOpacity>
             )}
@@ -133,23 +146,23 @@ const styles = StyleSheet.create({
 })
 
 
-const data = [
-    {
-        key: '1',
-        name: 'Team 01',
-        item: 'My powerfull team',
-        date: 'Oct 5, 2018'
-    },
-    {
-        key: '2',
-        name: 'Team 02',
-        item: 'My spare team',
-        date: 'Oct 5, 2018'
-    },
-    {
-        key: '3',
-        name: 'Team 03',
-        item: 'my ace team',
-        date: 'Oct 5, 2018'
-    }
-]
+// const data = [
+//     {
+//         key: '1',
+//         name: 'Team 01',
+//         item: 'My powerfull team',
+//         date: 'Oct 5, 2018'
+//     },
+//     {
+//         key: '2',
+//         name: 'Team 02',
+//         item: 'My spare team',
+//         date: 'Oct 5, 2018'
+//     },
+//     {
+//         key: '3',
+//         name: 'Team 03',
+//         item: 'my ace team',
+//         date: 'Oct 5, 2018'
+//     }
+// ]

@@ -33,8 +33,10 @@ export const SignUp = (({ navigation }) => {
     }, [])
 
     const signUp = (values, actions) => {
-        const setId = values.id = generateId();
-        dispatch(register(values));
+        id = values.id = generateId();
+        const user = {};
+        user[id] = { ...values }
+        dispatch(register(user));
     }
 
     useEffect(() => {

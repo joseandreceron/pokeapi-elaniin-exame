@@ -34,7 +34,7 @@ const PokemonDetails = ({ navigation, route }) => {
     const { pokemonDetail } = useSelector(state => state.pokemon);
 
     useEffect(() => {
-        const url = route.params.url;
+        const url = route.params.data.url;
         dispatch(getPokemonsById(url))
     }, [])
 
@@ -62,7 +62,7 @@ const PokemonDetails = ({ navigation, route }) => {
                 photo: pokemonDetail?.data?.sprites?.front_default,
                 type: pokemonDetail?.data?.types,
             }
-            route.params.selectedPokemons(pokemonData)
+            route.params.data.selectedPokemons(pokemonData)
         }
     }
 
@@ -110,7 +110,7 @@ const PokemonDetails = ({ navigation, route }) => {
                             <Button
                                 title={"Add to team"}
                                 aditionalStyle={styles.buttonStyles}
-                                onPress={() => setPokemon(route.params.pokemonData)}
+                                onPress={() => setPokemon(route.params.data.pokemonData)}
                             />
                         </View>
                     </View>

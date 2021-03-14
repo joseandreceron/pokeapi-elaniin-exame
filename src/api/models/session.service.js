@@ -22,12 +22,21 @@ export default class SessionService extends BaseService {
 
     static createUser(data) {
         const url = `${FIREBASE_URL}/users.json`
-        return api.post(url, data)
-    }
-
-    static createTeam(data) {
-        const url = `${FIREBASE_URL}/users/${data.key}.json`
         return api.patch(url, data)
     }
 
+    static createTeam(userID, data) {
+        const url = `${FIREBASE_URL}/users/${userID}/myTeam.json`
+        return api.patch(url, data)
+    }
+
+    static getplayerTeams(data) {
+        const url = `${FIREBASE_URL}/users/${data}/myTeam.json`
+        return api.get(url)
+    }
+
+    static editPlayerTeam(userID, teamId, data) {
+        const url = `${FIREBASE_URL}/users/${userID}/myTeam/${teamId}.json`
+        return api.patch(url, data)
+    }
 }

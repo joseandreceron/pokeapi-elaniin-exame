@@ -7,6 +7,7 @@ import { moderateScale } from '../helpers/ScailingScreen';
 import AllTeams from '../views/AllTeams';
 import CreateTeam from '../views/CreateTeam';
 import PokemonDetails from '../views/PokemonDetails';
+import TeamDetails from '../views/TeamDetails';
 
 export const settingsScreens = [
     {
@@ -52,6 +53,24 @@ export const settingsScreens = [
             headerTransparent: false,
             headerShown: true,
             headerTitle: "Pokemon Details",
+            headerTintColor: COLORS.blackV2,
+            headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: moderateScale(19),
+            },
+            headerStyle: {
+                shadowRadius: 0,
+                shadowOffset: { height: 0 },
+            }
+        }
+    },
+    {
+        name: 'TeamDetails',
+        screen: TeamDetails,
+        options: {
+            headerTransparent: false,
+            headerShown: true,
+            headerTitle: "Team Details",
             headerTintColor: COLORS.blackV2,
             headerTitleStyle: {
                 fontWeight: 'bold',

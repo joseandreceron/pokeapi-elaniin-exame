@@ -17,7 +17,7 @@ import { verticalScale } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 
 
-const PokemonList = ({ navigation, name, data, selectedPokemons }) => {
+const PokemonList = ({ navigation, name, data, selectedPokemons, action }) => {
     return (
         <FlatList
             data={data}
@@ -29,11 +29,11 @@ const PokemonList = ({ navigation, name, data, selectedPokemons }) => {
                 <PokemonCards
                     key={i}
                     name={item.name}
-                    action={(e) => navigation.navigate("PokemonDetails", {
+                    action={action ? (e) => action({
                         url: item.url,
                         selectedPokemons: selectedPokemons,
                         pokemonData: item
-                    })}
+                    }) : () => console.log("action")}
                 />
             }
         />

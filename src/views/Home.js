@@ -15,7 +15,7 @@ import HomeHeader from '../components/Header/HomeHeader';
 import Listcard from '../components/Cards/ListCards';
 
 //function
-import { getPokemonTeams } from "../store/session/session.actions";
+import { getPokemonTeams, cleanCreatePokemonTeam } from "../store/session/session.actions";
 
 //Constants
 import { verticalScale } from '../helpers/ScailingScreen';
@@ -28,7 +28,8 @@ const Home = ({ navigation }) => {
   const { user, myTeams } = useSelector(state => state.session);
 
   useEffect(() => {
-    dispatch(getPokemonTeams(user?.data?.id))
+    dispatch(cleanCreatePokemonTeam());
+    dispatch(getPokemonTeams(user?.data?.id));
   }, [])
 
   return (
@@ -47,16 +48,16 @@ const Home = ({ navigation }) => {
           region={user?.data?.region}
         />
 
-        {!myTeams?.isLoading &&
-          <View style={styles.content}>
-            <Listcard
-              title={'My Teams'}
-              description='My top 3 teams'
-              data={myTeams?.data}
-              viewMoreAction={() => navigation.navigate("AllTeams")}
-            />
-          </View>
-        }
+        <View style={styles.content}>
+          <Listcard
+            title={'My Teams'}
+            description='My top 3 teams'
+            data={myTeams?.data}
+            loading={myTeams?.isLoading}
+            error={myTeams?.error}
+            viewMoreAction={() => navigation.navigate("AllTeams")}
+          />
+        </View>
 
 
         <View style={styles.buttonContainer}>

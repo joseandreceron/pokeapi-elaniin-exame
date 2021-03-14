@@ -11,7 +11,7 @@ export default class PokeApiService extends BaseService {
     * @returns list of all pokemons
     *     */
 
-    static getAllPokemon(offset, limit) {
+    static getAllPokemon(offset = 100, limit = 100) {
         const url = `${API_URL}/pokemon/?offset=${offset}&limit=${limit}`
         return axios.get(url)
     }

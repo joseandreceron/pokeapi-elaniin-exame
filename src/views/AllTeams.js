@@ -4,7 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
+  Alert,
   FlatList
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ import Button from '../components/Buttons/Button';
 import TeamCards from "../components/Cards/TeamCards";
 
 //function
-import { getPokemonTeams } from "../store/session/session.actions";
+import { getPokemonTeams, deletePokemonTeam, cleandeletePokemonTeam } from "../store/session/session.actions";
 
 //Constants
 import { verticalScale } from '../helpers/ScailingScreen';
@@ -23,9 +23,10 @@ import { COLORS } from '../helpers/constants';
 
 const AllTeams = ({ navigation }) => {
   const [teamsArray, setTeamArray] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
-  const { user, myTeams } = useSelector(state => state.session);
+  const { user, myTeams, deleteTeam } = useSelector(state => state.session);
 
   useEffect(() => {
     dispatch(getPokemonTeams(user?.data?.id))
@@ -39,26 +40,65 @@ const AllTeams = ({ navigation }) => {
       }
       setTeamArray(array)
     }
-  }, [myTeams?.data])
+  }, [myTeams?.data, deleteTeam?.data])
+
+
+  const deleteGroup = (groupId) => {
+    setLoading(true)
+    dispatch(deletePokemonTeam(user?.data?.id, groupId));
+    
+  }
+
+  useEffect(() => {
+    if (deleteTeam?.data) {
+      Alert.alert(
+        'Team Deleted',
+        'The selected team has been deleted successfully',
+        [
+          { text: 'Yes', onPress: (e) => dispatch(cleandeletePokemonTeam()) },
+        ],
+        { cancelable: false },
+      );
+    }
+  }, [deleteTeam?.data])
+
+
+  const deleteAlert = (e) => {
+    let value = e;
+    Alert.alert(
+      'Delete Team?',
+      'Are you sure you want to delete this Team?',
+      [
+        { text: 'No', onPress: () => null },
+        { text: 'Yes', onPress: (e) => deleteGroup(value) },
+      ],
+      { cancelable: false },
+    );
+  }
+
 
   return (
     <View style={styles.container}>
 
-      <FlatList
-        data={teamsArray}
-        keyExtractor={({ item, index }) => index}
-        renderItem={({ item, index }) =>
-          <TeamCards
-            key={index}
-            teamNumber={index}
-            pokemons={item.pokemons}
-            teamName={item.team_name}
-            action={() => navigation.navigate("TeamDetails", {
-              teamDetails: item
-            })}
-          />
-        }
-      />
+      {!loading &&
+        <FlatList
+          data={teamsArray}
+          keyExtractor={({ item, index }) => index}
+          renderItem={({ item, index }) =>
+            <TeamCards
+              key={index}
+              teamNumber={index}
+              pokemons={item.pokemons}
+              teamName={item.team_name}
+              teamID={item.id}
+              deleteGroup={(e) => deleteAlert(e)}
+              action={() => navigation.navigate("TeamDetails", {
+                teamDetails: item
+              })}
+            />
+          }
+        />
+      }
 
 
 

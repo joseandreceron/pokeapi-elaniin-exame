@@ -17,10 +17,9 @@ import { moderateScale } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 
 
-const PokemonCards = ({ navigation, name, key, selected, action }) => {
+const PokemonCards = ({ navigation, name, selected, action }) => {
     return (
         <TouchableOpacity
-            key={key}
             style={styles.container}
             onPress={action ? (e) => action(e) : () => console.log("action")}
         >

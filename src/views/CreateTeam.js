@@ -18,7 +18,7 @@ import MyTeam from "../components/Modals/MyTeam";
 
 //Functions
 import { getAllPokemons } from '../store/pokemons/pokemon.actions';
-import { createPokemonTeam } from '../store/session/session.actions';
+import { createPokemonTeam, cleanCreatePokemonTeam } from '../store/session/session.actions';
 import { generateId } from '../helpers/helper-functions';
 
 //Constants
@@ -33,11 +33,12 @@ const CreateTeam = ({ navigation }) => {
 
     const dispatch = useDispatch();
     const { allPokemons } = useSelector(state => state.pokemon);
-    const { user, myTeams } = useSelector(state => state.session);
+    const { user, groupCreated } = useSelector(state => state.session);
 
     useEffect(() => {
-        dispatch(getAllPokemons())
-    }, [])
+        dispatch(cleanCreatePokemonTeam())
+        dispatch(getAllPokemons());
+    }, [dispatch])
 
 
     const createTeam = () => {
@@ -62,7 +63,7 @@ const CreateTeam = ({ navigation }) => {
         const pokemons = pokemonSelected
         if (pokemons.length < 6) {
             pokemons.push(e);
-            console.log("list of pokemons", pokemons)
+            Alert.alert("Success", "The pokemon has been added to the team roster.")
         } else {
             Alert.alert("Error", "You can only add up to 6 pokemons")
         }
@@ -81,7 +82,6 @@ const CreateTeam = ({ navigation }) => {
         isLoading(false)
     }
 
-
     const deleteAlert = (e) => {
         let value = e;
         Alert.alert(
@@ -94,6 +94,20 @@ const CreateTeam = ({ navigation }) => {
             { cancelable: false },
         );
     }
+
+
+    useEffect(() => {
+        if (groupCreated?.data) {
+            Alert.alert(
+                "Success",
+                "The team has been created successfully",
+                [{ text: "OK", onPress: () => { dispatch(cleanCreatePokemonTeam()); setShowTeamModal(false), setSelectedPokemons([]) } }],
+                { cancelable: false }
+            );
+        }
+    }, [groupCreated?.data])
+
+
 
     return (
         <View style={styles.container}>

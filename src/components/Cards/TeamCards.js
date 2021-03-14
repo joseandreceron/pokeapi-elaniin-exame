@@ -7,24 +7,41 @@ import {
     Text,
     Image
 } from 'react-native';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 //Components
 import TextLabel from '../UI/TextLabel';
 import Divider from '../UI/Divider';
 
 //Constants
-import { verticalScale } from '../../helpers/ScailingScreen';
+import { verticalScale, scale } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 
-const TeamCards = ({ navigation, teamNumber, pokemons, teamName, action }) => {
+const TeamCards = ({ teamID, teamNumber, pokemons, teamName, action, deleteGroup }) => {
     return (
         <TouchableOpacity
             key={teamNumber}
             style={styles.container}
             onPress={action ? (e) => action(e) : () => console.log("Team Details")}
         >
-            <TextLabel size={22}>Team {teamNumber + 1}</TextLabel>
-            <TextLabel size={14}>{teamName}</TextLabel>
+
+            <View style={styles.titleContainer}>
+                <View style={styles.wrapper}>
+                    <TextLabel size={22}>Team {teamNumber + 1}</TextLabel>
+                    <TextLabel size={14}>{teamName}</TextLabel>
+                </View>
+
+                <TouchableOpacity
+                    onPress={deleteGroup ? (e) => deleteGroup(teamID) : () => console.log("DeletePokemons")}
+                >
+                    <Ionicons
+                        name={"ios-close"}
+                        size={scale(25)}
+                    />
+                </TouchableOpacity>
+            </View>
+
+
             <Divider />
             <View style={styles.content}>
                 {pokemons.map((item, key) =>
@@ -54,6 +71,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         elevation: 2,
         marginVertical: verticalScale(10)
+    },
+    titleContainer: {
+        justifyContent: "space-between",
+        flexDirection: "row"
     },
     content: {
         flexDirection: 'row',

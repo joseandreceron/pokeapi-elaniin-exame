@@ -6,16 +6,17 @@ import { useSelector, useDispatch } from 'react-redux';
 //Constanst
 import { heightPercentageToDP, moderateScale, verticalScale, widthPercentageToDP } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
+import Loader from '../UI/Loader';
 
 
-const Listcard = ({ navigation, data, title, description, action, viewMoreAction }) => {
+const Listcard = ({ navigation, loading, error, data, title, description, action, viewMoreAction }) => {
     const [teamsArray, setTeamArray] = useState([])
 
     useEffect(() => {
         if (data) {
             let array = [];
             for (const [key, value] of Object.entries(data)) {
-                console.log(value);                
+                console.log(value);
                 array.push(value)
             }
             setTeamArray(array)
@@ -25,14 +26,22 @@ const Listcard = ({ navigation, data, title, description, action, viewMoreAction
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                {/* <SvgSelector icons={icon} size={35} /> */}
                 <View style={styles.titleWrapper}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.description}>{description}</Text>
                 </View>
             </View>
 
-            {teamsArray?.map((item, i) =>
+            {loading &&
+                <Loader
+                    loadingMessage={"Loading List"}
+                    errorState={error ? true : false}
+                    errorMessage={"Error while loading list"}
+                />
+            }
+
+
+            {!loading && teamsArray?.slice(0, 3).map((item, i) =>
                 <TouchableOpacity
                     key={i} style={styles.itemContainer}
                     onPress={action ? () => action() : () => console.log("pressed")}

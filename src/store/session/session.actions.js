@@ -98,6 +98,11 @@ export const createPokemonTeam = (user_id, data) => async (dispatch, getState) =
     }
 };
 
+export const cleanCreatePokemonTeam = () => (dispatch, getState) => {
+    dispatch({ type: ActionTypes.CREATE_POKEMON_TEAM_CLEANUP });
+};
+
+
 // get pokemon Teams ====================================================================================================
 
 export const getPokemonTeams = data => async (dispatch, getState) => {
@@ -133,3 +138,26 @@ export const editPokemonTeam = (user_id, team_id, data) => async (dispatch, getS
         })
     }
 };
+
+// DELETE pokemon Teams ====================================================================================================
+
+export const deletePokemonTeam = (user_id, team_id) => async (dispatch, getState) => {
+    dispatch({ type: ActionTypes.DELETE_POKEMON_TEAM_REQUEST });
+    try {
+        const response = await SessionService.deletePlayerTeam(user_id, team_id)
+        dispatch({
+            type: ActionTypes.DELETE_POKEMON_TEAM_SUCCESS,
+            payload: response
+        })
+    } catch (err) {
+        dispatch({
+            type: ActionTypes.DELETE_POKEMON_TEAM_FAILURE,
+            payload: err
+        })
+    }
+};
+
+export const cleandeletePokemonTeam = () => (dispatch, getState) => {
+    dispatch({ type: ActionTypes.DELETE_POKEMON_TEAM_CLEANUP });
+};
+

@@ -7,7 +7,8 @@ const initialState = {
     userRegister: {},
     groupCreated: {},
     myTeams: {},
-    editTeam: {}
+    editTeam: {},
+    deleteTeam: {}
 };
 
 function session(state = initialState, action) {
@@ -126,6 +127,11 @@ function session(state = initialState, action) {
                     error: action.payload,
                 },
             };
+        case ActionTypes.CREATE_POKEMON_TEAM_CLEANUP:
+            return {
+                ...state,
+                groupCreated: {},
+            };
         // GET POKEMON TEAMS
         case ActionTypes.GET_POKEMON_TEAM_REQUEST:
             return {
@@ -178,6 +184,37 @@ function session(state = initialState, action) {
                     error: action.payload,
                 },
             };
+        // DELETE POKEMON TEAMS
+        case ActionTypes.DELETE_POKEMON_TEAM_REQUEST:
+            return {
+                ...state,
+                deleteTeam: {
+                    isLoading: true,
+                    error: null,
+                },
+            };
+        case ActionTypes.DELETE_POKEMON_TEAM_SUCCESS:
+            return {
+                ...state,
+                deleteTeam: {
+                    data: true,
+                    isLoading: false,
+                    error: null,
+                },
+            };
+        case ActionTypes.DELETE_POKEMON_TEAM_FAILURE:
+            return {
+                ...state,
+                deleteTeam: {
+                    isLoading: false,
+                    error: action.payload,
+                },
+            };
+            case ActionTypes.DELETE_POKEMON_TEAM_CLEANUP:
+                return {
+                    ...state,
+                    deleteTeam: {},
+                };
         // Clean the session store
         case ActionTypes.CLEAN_SESSION_STORE:
             return {

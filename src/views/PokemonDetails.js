@@ -5,7 +5,8 @@ import {
     ScrollView,
     View,
     Text,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -62,7 +63,7 @@ const PokemonDetails = ({ navigation, route }) => {
                 photo: pokemonDetail?.data?.sprites?.front_default,
                 type: pokemonDetail?.data?.types,
             }
-            route.params.data.selectedPokemons(pokemonData)
+           route.params.data.selectedPokemons(pokemonData);
         }
     }
 

@@ -39,4 +39,9 @@ export default class SessionService extends BaseService {
         const url = `${FIREBASE_URL}/users/${userID}/myTeam/${teamId}.json`
         return api.patch(url, data)
     }
+
+    static deletePlayerTeam(userID, teamId) {
+        const url = `${FIREBASE_URL}/users/${userID}/myTeam/${teamId}.json`
+        return api.delete(url)
+    }
 }

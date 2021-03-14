@@ -75,7 +75,7 @@ const TeamDetails = ({ navigation, route }) => {
     if (pokemonTeam?.pokemons.length < 6) {
       setShowPokemonModal(!showPokemonModal)
     } else {
-      console.log("eliminate pokemon")
+      Alert.alert("Error", "You can only add up to 6 pokemons")
     }
   }
 
@@ -83,7 +83,6 @@ const TeamDetails = ({ navigation, route }) => {
     const pokemons = pokemonTeam?.pokemons
     if (pokemonTeam?.pokemons.length < 6) {
       pokemons.push(e);
-      console.log("list of pokemons", pokemons)
     } else {
       Alert.alert("Error", "You can only add up to 6 pokemons")
     }
@@ -92,15 +91,15 @@ const TeamDetails = ({ navigation, route }) => {
   const deleteAlert = (e) => {
     let value = e;
     Alert.alert(
-        'Delete pokemon?',
-        'Are you sure you want to delete this pokemon?',
-        [
-            { text: 'No', onPress: () => null },
-            { text: 'Yes', onPress: (e) => deleteSelectedPokemon(value) },
-        ],
-        { cancelable: false },
+      'Delete pokemon?',
+      'Are you sure you want to delete this pokemon?',
+      [
+        { text: 'No', onPress: () => null },
+        { text: 'Yes', onPress: (e) => deleteSelectedPokemon(value) },
+      ],
+      { cancelable: false },
     );
-}
+  }
 
   return (
     <View style={styles.container}>
@@ -118,7 +117,9 @@ const TeamDetails = ({ navigation, route }) => {
           <TextLabel size={25}>{pokemonTeam.team_name}</TextLabel>
 
           {!updateList &&
-            <ScrollView>
+            <ScrollView
+              contentContainerStyle={styles.list}
+            >
               {pokemonTeam?.pokemons.map((item, index) =>
                 <SelectedPokemons
                   key={index}
@@ -132,8 +133,6 @@ const TeamDetails = ({ navigation, route }) => {
           }
 
           <View style={styles.buttonStyles}>
-
-
             <Button
               title={"Add new pokemon"}
               onPress={() => addNewPokemon()}
@@ -143,12 +142,9 @@ const TeamDetails = ({ navigation, route }) => {
               title={"Save Changes"}
               onPress={() => editTeams()}
             />
-
           </View>
-
         </View>
       )}
-
 
       <Modal
         visible={showPokemonModal}
@@ -177,6 +173,9 @@ const styles = StyleSheet.create({
   },
   pokemonContainer: {
   },
+  list: {
+    paddingBottom: verticalScale(130)
+  },
   image: {
     height: 60,
     width: 60,
@@ -186,8 +185,11 @@ const styles = StyleSheet.create({
   },
   buttonStyles: {
     position: "absolute",
-    bottom: 0,
-    alignSelf: "center"
+    bottom: 10,
+    alignSelf: "center",
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: COLORS.white
   }
 });
 

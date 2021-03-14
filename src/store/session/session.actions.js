@@ -25,18 +25,10 @@ export const signIn = data => async (dispatch, getState) => {
             })
         }
     } catch (err) {
-        console.log(err.response?.data);
-        if (err.response?.status === 422) {
-            dispatch({
-                type: ActionTypes.USER_SIGN_IN_FAILURE,
-                payload: "The given data was invalid, please check your email or password."
-            })
-        } else {
-            dispatch({
-                type: ActionTypes.USER_SIGN_IN_FAILURE,
-                payload: err
-            })
-        }
+        dispatch({
+            type: ActionTypes.USER_SIGN_IN_FAILURE,
+            payload: "The given data was invalid, please check your email or password."
+        })
     }
 };
 
@@ -58,15 +50,6 @@ export const register = data => async (dispatch, getState) => {
 export const registerCleanUp = () => (dispatch, getState) => {
     dispatch({ type: ActionTypes.REGISTER_USER_CLEANUP });
 }
-
-
-// Log Out the user ====================================================================================================
-
-export const signOut = data => async (dispatch, getState) => {
-    dispatch({ type: ActionTypes.USER_LOG_OUT_REQUEST });
-    dispatch({ type: ActionTypes.USER_LOG_OUT_SUCCESS });
-    dispatch(cleanSessionStore());
-};
 
 
 // Clean Session Store ====================================================================================================

@@ -21,14 +21,15 @@ const PokemonList = ({ navigation, name, data, selectedPokemons, action }) => {
     return (
         <FlatList
             data={data}
-            keyExtractor={({ item, index }) => index}
+            keyExtractor={item => item.id}
+
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.flatlistStyles}
             ItemSeparatorComponent={() => <Divider />}
-            renderItem={({ item, index }, ) =>
+            renderItem={({ item, index },) =>
                 <PokemonCards
-                    key={item.id}
-                    name={item.name}
+                key={index.toString}
+                name={item.name}
                     action={action ? (e) => action({
                         url: item.url,
                         selectedPokemons: selectedPokemons,

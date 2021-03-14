@@ -1,5 +1,5 @@
 //Modules
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, StatusBar, TextInput, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -9,26 +9,23 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 //Components
 import Button from '../components/Buttons/Button';
 import Input from '../components/Forms/Input';
+import TextLabel from '../components/UI/TextLabel';
 
 //constants
 import { scale, verticalScale, moderateScale } from '../helpers/ScailingScreen';
 import { COLORS } from '../helpers/constants';
-import TextLabel from '../components/UI/TextLabel';
-import { signIn } from '../store/session/session.actions';
+import { cleanSessionStore, signIn } from '../store/session/session.actions';
 
 
 export const SignIn = (({ navigation }) => {
   const dispatch = useDispatch();
-  
-  const [password, SetPassword] = useState("")
-  const [user, setUser] = useState("")
+  const { user } = useSelector(state => state.session);
+
+  useEffect(() => {
+    dispatch(cleanSessionStore())
+  }, [])
 
   const userSignIn = async (values, actions) => {
-    const data = {
-      email: values.username,
-      password: values.password,
-    };
-
     dispatch(signIn(values))
   };
 
@@ -72,6 +69,8 @@ export const SignIn = (({ navigation }) => {
                 placeholderTextColor={COLORS.lightBlack}
                 error={props.touched.password && props.errors.password}
               />
+
+                <TextLabel color={"red"}>{user?.error}</TextLabel>
 
               <View style={styles.buttonContainer}>
                 <Button

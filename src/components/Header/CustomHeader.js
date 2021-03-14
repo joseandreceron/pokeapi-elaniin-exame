@@ -5,34 +5,28 @@ import { COLORS } from '../../helpers/constants';
 import { scale, moderateScale, verticalScale, heightPercentageToDP } from '../../helpers/ScailingScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-class CustomHeader extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+const CustomHeader = ({ navigation, logout }) => {
+    return (
+        <View style={styles.iconContainer}>
+            <View style={styles.wrapper}>
+                <TouchableOpacity
+                    onPress={() => navigation.openDrawer()}
+                >
+                    {/* <SvgSelector icons='menu' size={25} /> */}
+                </TouchableOpacity>
 
-    render() {
-        return (
-            <View style={styles.iconContainer}>
-                <View style={styles.wrapper}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.openDrawer()}
-                    >
-                        {/* <SvgSelector icons='menu' size={25} /> */}
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <Ionicons
-                            name='notifications'
-                            size={30}
-                            color={COLORS.white}
-                        />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                    onPress={() => logout()}
+                >
+                    <Ionicons
+                        name='exit'
+                        size={30}
+                        color={COLORS.white}
+                    />
+                </TouchableOpacity>
             </View>
-        );
-    }
+        </View>
+    );
 }
 
 export default CustomHeader;

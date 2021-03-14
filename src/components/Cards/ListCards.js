@@ -7,21 +7,29 @@ import { useSelector, useDispatch } from 'react-redux';
 import { heightPercentageToDP, moderateScale, verticalScale, widthPercentageToDP } from '../../helpers/ScailingScreen';
 import { COLORS } from '../../helpers/constants';
 import Loader from '../UI/Loader';
+import TextLabel from '../UI/TextLabel';
 
 
 const Listcard = ({ navigation, loading, error, data, title, description, action, viewMoreAction }) => {
     const [teamsArray, setTeamArray] = useState([])
 
+    navigation.addListener('focus', () => {
+        setData();
+    })
+
     useEffect(() => {
+        setData()
+    }, [])
+
+    const setData = () => {
         if (data) {
             let array = [];
             for (const [key, value] of Object.entries(data)) {
-                console.log(value);
                 array.push(value)
             }
             setTeamArray(array)
         }
-    }, [])
+    }
 
     return (
         <View style={styles.container}>
@@ -46,10 +54,10 @@ const Listcard = ({ navigation, loading, error, data, title, description, action
                     key={i} style={styles.itemContainer}
                     onPress={action ? () => action() : () => console.log("pressed")}
                 >
-                    <Text style={styles.name}>Team {i + 1}</Text>
-                    <Text style={styles.item}>Number of pokemon {item.pokemons.length}</Text>
+                    <TextLabel additionalStyles={styles.name}>Team {i + 1}</TextLabel>
+                    <TextLabel additionalStyles={styles.item}>Number of pokemon {item.pokemons.length}</TextLabel>
                     <View style={styles.wrapper}>
-                        <Text style={styles.type}>{item.team_name}</Text>
+                        <TextLabel additionalStyles={styles.type}>{item.team_name}</TextLabel>
                     </View>
                 </TouchableOpacity>
             )}
@@ -58,7 +66,7 @@ const Listcard = ({ navigation, loading, error, data, title, description, action
                 onPress={viewMoreAction ? (e) => viewMoreAction(e) : () => console.log("Viewmore")}
                 style={styles.viewMoreButton}
             >
-                <Text style={styles.buttonText}>View more</Text>
+                <TextLabel additionalStyles={styles.buttonText}>View more</TextLabel>
             </TouchableOpacity>
 
         </View>

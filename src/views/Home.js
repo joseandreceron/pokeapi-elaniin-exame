@@ -4,7 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
+  Alert,
   Modal,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,7 +15,7 @@ import HomeHeader from '../components/Header/HomeHeader';
 import Listcard from '../components/Cards/ListCards';
 
 //function
-import { getPokemonTeams, cleanCreatePokemonTeam } from "../store/session/session.actions";
+import { getPokemonTeams, cleanCreatePokemonTeam, cleanSessionStore } from "../store/session/session.actions";
 
 //Constants
 import { verticalScale } from '../helpers/ScailingScreen';
@@ -32,12 +32,26 @@ const Home = ({ navigation }) => {
     dispatch(getPokemonTeams(user?.data?.id));
   }, [])
 
+
+  const logout = () => {
+    Alert.alert(
+      'Sign Out?',
+      'Are you sure you want to sign out?',
+      [
+          { text: 'No', onPress: () => null },
+          { text: 'Yes', onPress: (e) => dispatch(cleanSessionStore()) },
+      ],
+      { cancelable: false },
+  );
+  }
+
   return (
     <View style={styles.container}>
 
 
       <CustomHeader
         navigation={navigation}
+        logout={() => logout()}
       />
 
       <ScrollView>
@@ -55,6 +69,7 @@ const Home = ({ navigation }) => {
             data={myTeams?.data}
             loading={myTeams?.isLoading}
             error={myTeams?.error}
+            navigation={navigation}
             viewMoreAction={() => navigation.navigate("AllTeams")}
           />
         </View>

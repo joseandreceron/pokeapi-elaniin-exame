@@ -1,6 +1,6 @@
 //Modules
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import { View, Alert, StyleSheet, Image, SafeAreaView, StatusBar, TextInput, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ export const SignUp = (({ navigation }) => {
     const regions = useSelector(state => state.region.allregions?.data?.results?.map(c => ({ label: c.name, value: c.name })) ?? []);
 
     useEffect(() => {
-        dispatch(registerCleanUp)
+        dispatch(registerCleanUp())
         dispatch(getAllRegions())
     }, [])
 
@@ -41,11 +41,22 @@ export const SignUp = (({ navigation }) => {
 
     useEffect(() => {
         if (userRegister?.success) {
-            console.log("success");
-        } else {
-            console.log("error")
+            Alert.alert(
+                'Success',
+                'Account has been created successfully',
+                [
+                    { text: 'Ok', onPress: () => { dispatch(registerCleanUp()), navigation.goBack() } },
+                ],
+                { cancelable: false },
+            );
         }
-    }, [userRegister])
+    }, [userRegister?.success])
+
+    useEffect(() => {
+        if (userRegister?.error) {
+            Alert.alert("Error", "An account created error has occurred.")
+        }
+    }, [userRegister?.error])
 
     return (
         <SafeAreaView style={styles.container}>

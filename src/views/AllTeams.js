@@ -30,8 +30,9 @@ const AllTeams = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getPokemonTeams(user?.data?.id))
-  }, [])
+  }, [deleteTeam?.data])
 
+  //Function to save the objects in a array.
   useEffect(() => {
     if (myTeams?.data) {
       let array = [];
@@ -39,16 +40,18 @@ const AllTeams = ({ navigation }) => {
         array.push(value)
       }
       setTeamArray(array)
+      setLoading(false)
     }
-  }, [myTeams?.data, deleteTeam?.data])
+  }, [myTeams?.data])
 
 
+  //Function to delete Group
   const deleteGroup = (groupId) => {
     setLoading(true)
     dispatch(deletePokemonTeam(user?.data?.id, groupId));
-    
   }
 
+  //Function to confirm if the delete pokemon was succesfull
   useEffect(() => {
     if (deleteTeam?.data) {
       Alert.alert(

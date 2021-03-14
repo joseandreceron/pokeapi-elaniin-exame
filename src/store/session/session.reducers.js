@@ -220,6 +220,7 @@ function session(state = initialState, action) {
             return {
                 ...state,
                 user: {},
+                userRegister: {}
             };
         default:
             return state;

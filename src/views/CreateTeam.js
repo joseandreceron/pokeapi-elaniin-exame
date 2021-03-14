@@ -27,10 +27,13 @@ import { COLORS } from '../helpers/constants';
 
 
 const CreateTeam = ({ navigation }) => {
+    //States
     const [pokemonSelected, setSelectedPokemons] = useState([]);
     const [showTeamModal, setShowTeamModal] = useState(false);
     const [loading, isLoading] = useState(false);
+    const [teamName, setTeamName] = useState("")
 
+    //Redux
     const dispatch = useDispatch();
     const { allPokemons } = useSelector(state => state.pokemon);
     const { user, groupCreated } = useSelector(state => state.session);
@@ -41,13 +44,14 @@ const CreateTeam = ({ navigation }) => {
     }, [dispatch])
 
 
+    //Function to create the team
     const createTeam = () => {
         if (pokemonSelected.length >= 3) {
             const id = generateId();
 
             const groupData = {};
             groupData[id] = {
-                "team_name": "My Awesome Group",
+                "team_name": teamName,
                 "pokemons": pokemonSelected,
                 "id": id
             }
@@ -59,6 +63,7 @@ const CreateTeam = ({ navigation }) => {
         }
     }
 
+    //Function that adds pokemon to the list
     const selectedPokemons = (e) => {
         const pokemons = pokemonSelected
         if (pokemons.length < 6) {
@@ -69,6 +74,7 @@ const CreateTeam = ({ navigation }) => {
         }
     }
 
+    //Functionto delete selected pokemon
     const deleteSelectedPokemon = (e) => {
         isLoading(true)
         const pokemons = pokemonSelected
@@ -82,6 +88,7 @@ const CreateTeam = ({ navigation }) => {
         isLoading(false)
     }
 
+    //Function to confirm if you want to delete pokemon
     const deleteAlert = (e) => {
         let value = e;
         Alert.alert(
@@ -95,19 +102,25 @@ const CreateTeam = ({ navigation }) => {
         );
     }
 
-
+    //Function to validate id the request was succesfull
     useEffect(() => {
         if (groupCreated?.data) {
             Alert.alert(
                 "Success",
                 "The team has been created successfully",
-                [{ text: "OK", onPress: () => { dispatch(cleanCreatePokemonTeam()); setShowTeamModal(false), setSelectedPokemons([]) } }],
+                [{ text: "OK", onPress: () => cleanFields() }],
                 { cancelable: false }
             );
         }
     }, [groupCreated?.data])
 
-
+    //Function to clean all the remaning states of this view 
+    const cleanFields = () => {
+        dispatch(cleanCreatePokemonTeam());
+        setShowTeamModal(false);
+        setSelectedPokemons([]);
+        setTeamName("")
+    }
 
     return (
         <View style={styles.container}>
@@ -147,6 +160,8 @@ const CreateTeam = ({ navigation }) => {
                 <MyTeam
                     showModal={() => setShowTeamModal(!showTeamModal)}
                     data={pokemonSelected}
+                    setTeamName={setTeamName}
+                    teamName={teamName}
                     action={() => createTeam()}
                     deletePokemon={(e) => deleteAlert(e)}
                     loading={loading}

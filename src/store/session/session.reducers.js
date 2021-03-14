@@ -220,7 +220,9 @@ function session(state = initialState, action) {
             return {
                 ...state,
                 user: {},
-                userRegister: {}
+                userRegister: {},
+                myTeams: {},
+                groupCreated: {}
             };
         default:
             return state;
